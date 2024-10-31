@@ -50,6 +50,11 @@ export const asyncRouteDefine = {
     defaultPath: "/ifdefines",
     component: () => import("@/views/payconfig/payIfDefine/List"),
   },
+  // 服务商列表
+  // IsvListPage: {
+  //   defaultPath: "/isv",
+  //   component: () => import("@/views/isv/IsvList"),
+  // }, 
   // 商户列表
   MchListPage: {
     defaultPath: "/mch",
