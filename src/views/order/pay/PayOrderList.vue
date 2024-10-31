@@ -417,7 +417,7 @@ import Proceed from "@/components/GloabalProceed/proceed"
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
-  { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 120 },
+  { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 200 },
   { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
   { key: 'patientUni', title: '患者唯一码', width: 120, scopedSlots: { customRender: 'patientUniCodeSlot' } },
   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
