@@ -40,40 +40,51 @@
       <div class="top-middle__resize">
         <div class="middle-top">
           <div class="chart-item middle-larger">
-            <div class="chart-data">
+            <div class="chart-data" style="border:1px solid #409eff;">
               <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 1 }">
                 <div class="analy-title">
-                  <span>交易总金额</span>
-                  <a-tooltip>
+
+                  <span><a-icon type="wallet" />&nbsp;净收入金额</span>
+                  <!-- <a-tooltip>
                     <template slot="title">
                       {{ mainTips.totalAmountTip }}
                     </template>
                     <a-icon type="question-circle" />
-                  </a-tooltip>
+                  </a-tooltip> -->
                 </div>
-                <a-card :bordered="false">
-                  <a-statistic style="margin-top: 10px; color: #fff !important" :precision="2"
-                    :value-style="{ color: '#fff' }" :value="'￥' + this.mainChart.totalAmount" />
-                </a-card>
+                <div style="font-size: 20px;color:#333;margin-top: 10px">
+                  <span>￥ {{ this.mainChart.totalAmount }}</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">1452笔</span>
+                </div>
+                <!-- <a-card :bordered=" false">
+                    <a-statistic style="margin-top: 10px; color: #fff !important" :precision="2"
+                      :value-style="{ color: '#000' }" :value="'￥' + this.mainChart.totalAmount" />
+                    </a-card> -->
+
               </a-skeleton>
             </div>
           </div>
           <div class="chart-item middle-larger">
-            <div class="chart-data">
+            <div class="chart-data" style="border:1px solid #EA6692">
               <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 1 }">
                 <div class="analy-title">
-                  <span>交易总笔数</span>
-                  <a-tooltip>
+
+                  <span style="color:#EA6692"> <a-icon type="dollar" />&nbsp;交易金额</span>
+                  <!-- <a-tooltip>
                     <template slot="title">
                       {{ mainTips.totalPayCountTip }}
                     </template>
                     <a-icon type="question-circle" />
-                  </a-tooltip>
+                  </a-tooltip> -->
                 </div>
-                <a-card :bordered="false">
+                <div style="font-size: 20px;color:#333;margin-top: 10px">
+                  <span>￥ {{ this.mainChart.totalPayCount }}</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">1452笔</span>
+                </div>
+                <!-- <a-card :bordered="false">
                   <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
                     :value="this.mainChart.totalPayCount + ' 笔'" />
-                </a-card>
+                </a-card> -->
               </a-skeleton>
             </div>
           </div>
@@ -107,28 +118,32 @@
             </div>
           </div> -->
           <div class="chart-item middle-smaller">
-            <div class="chart-data">
+            <div class="chart-data" style="border:1px solid #83C86B;color:#83C86B">
               <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 1 }">
                 <div class="analy-title">
-                  <span>商户数量</span>
-                  <a-tooltip>
+                  <span><a-icon type="transaction" />&nbsp;退款金额</span>
+                  <!-- <a-tooltip>
                     <template slot="title">
                       {{ mainTips.totalMchTip }}
                     </template>
                     <a-icon type="question-circle" />
-                  </a-tooltip>
+                  </a-tooltip> -->
                 </div>
-                <a-card :bordered="false">
+                <div style="font-size: 20px;color:#333;margin-top: 10px">
+                  <span>￥ {{ this.mainChart.totalMch }}</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">1452笔</span>
+                </div>
+                <!-- <a-card :bordered="false">
                   <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
                     :value="this.mainChart.totalMch" />
-                </a-card>
+                </a-card> -->
               </a-skeleton>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="top-right__resize">
+      <!-- <div class="top-right__resize">
         <div class="chart-data user-greet">
           <a-skeleton active avatar :loading="skeletonIsShow" :paragraph="{ rows: 6 }">
             <div class="user-greet-title">
@@ -144,7 +159,7 @@
                   </div>
                 </div>
               </div>
-              <!-- <span  class="there-spot"></span> -->
+              <!== <span  class="there-spot"></span> ==>
               <img src="@/assets/svg/more.svg" class="there-spot" alt="更多" slot="extra" @click="showDrawer" />
             </div>
             <div class="quick-start">
@@ -161,7 +176,7 @@
             </div>
           </a-skeleton>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="chart-bottom">
@@ -796,7 +811,7 @@ export default {
 }
 
 .analy-title>span {
-  font-weight: 600;
+  // font-weight: 600;
 }
 
 .there-spot:hover {
@@ -924,7 +939,7 @@ export default {
   }
 
   .top-middle__resize {
-    flex: 0 0 200px;
+    flex: 0 0 300px;
     color: #fff;
 
     .ant-card {
@@ -942,7 +957,7 @@ export default {
 
     .middle-bottom {
       .chart-data {
-        background-color: #123559 !important;
+        background-color: #fff !important;
 
         .analy-title {
           font-size: 20px;
@@ -952,7 +967,8 @@ export default {
 
     .middle-top {
       .chart-data {
-        background-color: rgb(64, 158, 255) !important;
+        background-color: #fff !important;
+        color: rgb(64, 158, 255);
 
         .analy-title {
           font-size: 20px;
