@@ -130,15 +130,14 @@ import moment from 'moment'
 // ]
 const tableColumns = [
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
-  { key: 'billDate', dataIndex: 'billDate', title: '交易时间', width: 120 },
+  { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 200 },
   { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
-  { key: 'patientUni', title: '患者唯一码', width: 108, scopedSlots: { customRender: 'patientUniCodeSlot' } },
+  { key: 'patientUni', title: '患者唯一码', width: 120, scopedSlots: { customRender: 'patientUniCodeSlot' } },
   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
   { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
-  { key: 'amount', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
-  { key: 'amount', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
-  { key: 'amount', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
-
+  { key: 'optTypeDesc', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
+  { key: 'subCorpName', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
+  { key: 'orderSourceDesc', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
 
   // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
   // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
