@@ -50,47 +50,49 @@ export const asyncRouteDefine = {
     defaultPath: "/ifdefines",
     component: () => import("@/views/payconfig/payIfDefine/List"),
   },
-  IsvListPage: {
-    defaultPath: "/isv",
-    component: () => import("@/views/isv/IsvList"),
-  }, // 服务商列表
+  // 商户列表
   MchListPage: {
     defaultPath: "/mch",
     component: () => import("@/views/mch/MchList"),
-  }, // 商户列表
-
+  },
+  // 商户应用列表
   MchAppPage: {
     defaultPath: "/apps",
     component: () => import("@/views/mchApp/List"),
-  }, // 商户应用列表
+  },
+   // 支付测试
   PayTestPage: {
     defaultPath: "/paytest",
     component: () => import("@/views/payTest/PayTest"),
-  }, // 支付测试
-
+  }, 
+  // 支付订单列表
   PayOrderListPage: {
     defaultPath: "/payOrder",
     component: () => import("@/views/order/pay/PayOrderList"),
-  }, // 支付订单列表
+  }, 
+  // 退款订单列表
   RefundOrderListPage: {
     defaultPath: "/refundOrder",
     component: () => import("@/views/order/refund/RefundOrderList"),
-  }, // 退款订单列表
-  TransferOrderListPage: {
-    defaultPath: "/transferOrder",
-    component: () => import("@/views/order/transfer/TransferOrderList"),
-  }, // 转账订单
-
+  }, 
+  // 转账订单
+  // TransferOrderListPage: {
+  //   defaultPath: "/transferOrder",
+  //   component: () => import("@/views/order/transfer/TransferOrderList"),
+  // }, 
+  // 商户通知列表
   MchNotifyListPage: {
     defaultPath: "/notify",
     component: () => import("@/views/order/notify/MchNotifyList"),
-  }, // 商户通知列表
+  }, 
+  // 系统配置
   SysConfigPage: {
     defaultPath: "/config",
     component: () => import("@/views/sys/config/SysConfig"),
-  }, // 系统配置
+  }, 
+  // 系统日志
   SysLogPage: {
     defaultPath: "/log",
     component: () => import("@/views/sys/log/SysLog"),
-  }, // 系统日志
+  }, 
 };
