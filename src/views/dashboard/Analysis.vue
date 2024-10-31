@@ -4,22 +4,13 @@
       <div class="top-left__resize">
         <div class="chart-data" style="position: relative">
           <!-- 骨架屏与图表有冲突，故不使用内嵌方式。 因为内边距的原因，采取v-if的方式 -->
-          <a-skeleton
-            active
-            :loading="true"
-            v-if="skeletonIsShow"
-            style="padding: 20px"
-            :paragraph="{ rows: 6 }"
-          />
+          <a-skeleton active :loading="true" v-if="skeletonIsShow" style="padding: 20px" :paragraph="{ rows: 6 }" />
           <div v-show="!skeletonIsShow">
-            <div
-              class="analy-title"
-              style="
+            <div class="analy-title" style="
                 padding: 20px;
                 box-sizing: border-box;
                 padding-bottom: 10px;
-              "
-            >
+              ">
               <span class="title__bolder">今日交易金额</span>
               <a-tooltip>
                 <template slot="title">
@@ -37,11 +28,9 @@
             </div>
             <div class="payAmountSpan" v-show="ispayAmount">
               <span>昨日交易金额：￥{{ this.mainChart.yesterdayAmount }}</span>
-              <span
-                >近七天交易金额：￥{{
-                  this.mainChart.payWeek
-                }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span
-              >
+              <span>近七天交易金额：￥{{
+                this.mainChart.payWeek
+              }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
             </div>
             <empty v-show="!ispayAmount" />
           </div>
@@ -52,11 +41,7 @@
         <div class="middle-top">
           <div class="chart-item middle-larger">
             <div class="chart-data">
-              <a-skeleton
-                active
-                :loading="skeletonIsShow"
-                :paragraph="{ rows: 1 }"
-              >
+              <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 1 }">
                 <div class="analy-title">
                   <span>交易总金额</span>
                   <a-tooltip>
@@ -67,23 +52,15 @@
                   </a-tooltip>
                 </div>
                 <a-card :bordered="false">
-                  <a-statistic
-                    style="margin-top: 10px; color: #fff !important"
-                    :precision="2"
-                    :value-style="{ color: '#fff' }"
-                    :value="'￥' + this.mainChart.totalAmount"
-                  />
+                  <a-statistic style="margin-top: 10px; color: #fff !important" :precision="2"
+                    :value-style="{ color: '#fff' }" :value="'￥' + this.mainChart.totalAmount" />
                 </a-card>
               </a-skeleton>
             </div>
           </div>
           <div class="chart-item middle-larger">
             <div class="chart-data">
-              <a-skeleton
-                active
-                :loading="skeletonIsShow"
-                :paragraph="{ rows: 1 }"
-              >
+              <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 1 }">
                 <div class="analy-title">
                   <span>交易总笔数</span>
                   <a-tooltip>
@@ -94,11 +71,8 @@
                   </a-tooltip>
                 </div>
                 <a-card :bordered="false">
-                  <a-statistic
-                    :value-style="{ color: '#fff' }"
-                    style="margin-top: 10px; color: #fff"
-                    :value="this.mainChart.totalPayCount + ' 笔'"
-                  />
+                  <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
+                    :value="this.mainChart.totalPayCount + ' 笔'" />
                 </a-card>
               </a-skeleton>
             </div>
@@ -106,7 +80,7 @@
         </div>
 
         <div class="middle-bottom">
-          <div class="chart-item middle-smaller">
+          <!-- <div class="chart-item middle-smaller">
             <div class="chart-data">
               <a-skeleton
                 active
@@ -131,14 +105,10 @@
                 </a-card>
               </a-skeleton>
             </div>
-          </div>
+          </div> -->
           <div class="chart-item middle-smaller">
             <div class="chart-data">
-              <a-skeleton
-                active
-                :loading="skeletonIsShow"
-                :paragraph="{ rows: 1 }"
-              >
+              <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 1 }">
                 <div class="analy-title">
                   <span>商户数量</span>
                   <a-tooltip>
@@ -149,11 +119,8 @@
                   </a-tooltip>
                 </div>
                 <a-card :bordered="false">
-                  <a-statistic
-                    :value-style="{ color: '#fff' }"
-                    style="margin-top: 10px; color: #fff"
-                    :value="this.mainChart.totalMch"
-                  />
+                  <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
+                    :value="this.mainChart.totalMch" />
                 </a-card>
               </a-skeleton>
             </div>
@@ -163,12 +130,7 @@
 
       <div class="top-right__resize">
         <div class="chart-data user-greet">
-          <a-skeleton
-            active
-            avatar
-            :loading="skeletonIsShow"
-            :paragraph="{ rows: 6 }"
-          >
+          <a-skeleton active avatar :loading="skeletonIsShow" :paragraph="{ rows: 6 }">
             <div class="user-greet-title">
               <div class="user-greet-all">
                 <div class="user-greet-img">
@@ -177,21 +139,13 @@
                 <div class="user-greet-all">
                   <span style="">{{ mainTips.helloTitle }}</span>
                   <div>
-                    <span style="font-size: 12px" v-if="isAdmin === 1"
-                      >超级管理员</span
-                    >
+                    <span style="font-size: 12px" v-if="isAdmin === 1">超级管理员</span>
                     <span style="font-size: 12px" v-else>操作员</span>
                   </div>
                 </div>
               </div>
               <!-- <span  class="there-spot"></span> -->
-              <img
-                src="@/assets/svg/more.svg"
-                class="there-spot"
-                alt="更多"
-                slot="extra"
-                @click="showDrawer"
-              />
+              <img src="@/assets/svg/more.svg" class="there-spot" alt="更多" slot="extra" @click="showDrawer" />
             </div>
             <div class="quick-start">
               <p class="quick-start-title title__bolder">快速开始</p>
@@ -213,41 +167,23 @@
     <div class="chart-bottom">
       <div class="chart-item bottom-left">
         <div class="chart-data">
-          <a-skeleton
-            active
-            :loading="skeletonIsShow"
-            :paragraph="{ rows: 6 }"
-          />
+          <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 6 }" />
           <div v-show="!skeletonIsShow">
             <div>
               <div class="pay-count-title">
                 <span class="chart-title">交易统计</span>
                 <div class="chart-padding" style="border: 1px solid #ddd">
-                  <a-range-picker
-                    ref="jeeRange"
-                    style="width: 100%"
-                    :ranges="{
-                      最近一个月: [moment().subtract(1, 'months'), moment()],
-                    }"
-                    :default-value="[moment().subtract(7, 'days'), moment()]"
-                    show-time
-                    format="YYYY-MM-DD"
-                    @change="transactionChange"
-                    :disabled-date="disabledDate"
-                    @ok="payCountOk"
-                    :allowClear="false"
-                  >
+                  <a-range-picker ref="jeeRange" style="width: 100%" :ranges="{
+                    最近一个月: [moment().subtract(1, 'months'), moment()],
+                  }" :default-value="[moment().subtract(7, 'days'), moment()]" show-time format="YYYY-MM-DD"
+                    @change="transactionChange" :disabled-date="disabledDate" @ok="payCountOk" :allowClear="false">
                     <div class="change-date-layout">
                       {{ jeeDate ? jeeDate : "最近七天" }}
                       <div class="pay-icon">
                         <div v-if="lastSevenDays" class="change-date-icon">
                           <a-icon type="down" />
                         </div>
-                        <div
-                          v-else
-                          @click.stop="iconClick"
-                          class="change-date-icon"
-                        >
+                        <div v-else @click.stop="iconClick" class="change-date-icon">
                           <a-icon type="close-circle" />
                         </div>
                       </div>
@@ -258,9 +194,7 @@
               <div style="position: relative">
                 <div v-show="isPayCount">
                   <div id="payCount"></div>
-                  <span style="right: 30px; position: absolute; top: 0"
-                    >单位（元）</span
-                  >
+                  <span style="right: 30px; position: absolute; top: 0">单位（元）</span>
                 </div>
                 <empty v-show="!isPayCount" />
               </div>
@@ -271,40 +205,22 @@
 
       <div class="chart-item bottom-right">
         <div class="chart-data">
-          <a-skeleton
-            active
-            :loading="skeletonIsShow"
-            :paragraph="{ rows: 6 }"
-          />
+          <a-skeleton active :loading="skeletonIsShow" :paragraph="{ rows: 6 }" />
           <div v-show="!skeletonIsShow">
             <div class="pay-count-title">
               <span class="chart-title">支付方式</span>
               <div class="chart-padding" style="border: 1px solid #ddd">
-                <a-range-picker
-                  style="width: 100%"
-                  ref="jeeRangePie"
-                  :ranges="{
-                    最近一个月: [moment().subtract(1, 'months'), moment()],
-                  }"
-                  :default-value="[moment().subtract(7, 'days'), moment()]"
-                  @change="payOnChange"
-                  show-time
-                  format="YYYY-MM-DD"
-                  :disabled-date="disabledDate"
-                  @ok="payTypeOk"
-                  :allowClear="false"
-                >
+                <a-range-picker style="width: 100%" ref="jeeRangePie" :ranges="{
+                  最近一个月: [moment().subtract(1, 'months'), moment()],
+                }" :default-value="[moment().subtract(7, 'days'), moment()]" @change="payOnChange" show-time
+                  format="YYYY-MM-DD" :disabled-date="disabledDate" @ok="payTypeOk" :allowClear="false">
                   <div class="change-date-layout">
                     {{ jeeDatePie ? jeeDatePie : "最近七天" }}
                     <div class="pay-icon">
                       <div v-if="!pieDays" class="change-date-icon">
                         <a-icon type="down" />
                       </div>
-                      <div
-                        v-else
-                        @click.stop="iconPieClick"
-                        class="change-date-icon"
-                      >
+                      <div v-else @click.stop="iconPieClick" class="change-date-icon">
                         <a-icon type="close-circle" />
                       </div>
                     </div>
@@ -324,13 +240,7 @@
     <!-- 抽屉 -->
     <template>
       <div>
-        <a-drawer
-          title="用户信息"
-          placement="right"
-          :closable="true"
-          :visible="visible"
-          @close="onClose"
-        >
+        <a-drawer title="用户信息" placement="right" :closable="true" :visible="visible" @close="onClose">
           <a-row>
             <a-col :span="24">
               <a-descriptions>
@@ -339,8 +249,8 @@
                     $store.state.user.sysType === "MGR"
                       ? "运营平台"
                       : $store.state.user.sysType === "MCH"
-                      ? "商户系统"
-                      : "未知"
+                        ? "商户系统"
+                        : "未知"
                   }}
                 </a-descriptions-item>
               </a-descriptions>
@@ -373,8 +283,8 @@
                     $store.state.user.sex === 1
                       ? "男"
                       : $store.state.user.sex === 2
-                      ? "女"
-                      : "未知"
+                        ? "女"
+                        : "未知"
                   }}
                 </a-descriptions-item>
               </a-descriptions>
@@ -382,24 +292,16 @@
             <a-col :span="24">
               <a-descriptions>
                 <a-descriptions-item label="权限">
-                  <a-tag color="#2db7f5" v-if="$store.state.user.isAdmin === 1"
-                    >超管</a-tag
-                  >
-                  <a-tag color="#87d068" v-if="$store.state.user.isAdmin === 0"
-                    >操作员</a-tag
-                  >
+                  <a-tag color="#2db7f5" v-if="$store.state.user.isAdmin === 1">超管</a-tag>
+                  <a-tag color="#87d068" v-if="$store.state.user.isAdmin === 0">操作员</a-tag>
                 </a-descriptions-item>
               </a-descriptions>
             </a-col>
             <a-col :span="24">
               <a-descriptions>
                 <a-descriptions-item label="用户状态">
-                  <a-tag color="green" v-if="$store.state.user.state === 1"
-                    >启用</a-tag
-                  >
-                  <a-tag color="red" v-if="$store.state.user.state === 0"
-                    >停用</a-tag
-                  >
+                  <a-tag color="green" v-if="$store.state.user.state === 1">启用</a-tag>
+                  <a-tag color="red" v-if="$store.state.user.state === 0">停用</a-tag>
                 </a-descriptions-item>
               </a-descriptions>
             </a-col>
@@ -581,16 +483,15 @@ export default {
           Math.sqrt(
             Math.abs(
               Math.pow(R, 2) /
-                (Math.pow(textWidth / 2, 2) + Math.pow(textHeight, 2))
+              (Math.pow(textWidth / 2, 2) + Math.pow(textHeight, 2))
             )
           ),
           1
         );
       }
       const textStyleStr = `width:${containerWidth}px`;
-      return `<div style="${textStyleStr};font-size:${scale}em;line-height:${
-        scale < 1 ? 1 : "inherit"
-      };">${text}</div>`;
+      return `<div style="${textStyleStr};font-size:${scale}em;line-height:${scale < 1 ? 1 : "inherit"
+        };">${text}</div>`;
     },
     showDrawer() {
       this.visible = true;
@@ -805,6 +706,7 @@ export default {
 
 <style lang="less" scoped>
 @import "./index.less"; // 响应式布局
+
 .user-greet {
   font-size: 19px;
   font-weight: 500;
@@ -819,6 +721,7 @@ export default {
       text-align: left;
       margin-bottom: 0;
     }
+
     .quick-start-ul {
       font-size: 13px;
       display: flex;
@@ -837,12 +740,14 @@ export default {
           color: @jee-inside-link;
         }
       }
+
       li:hover {
         cursor: pointer;
       }
     }
   }
 }
+
 .chart-padding {
   box-sizing: border-box;
   padding: 0 5px;
@@ -867,12 +772,14 @@ export default {
       overflow: hidden;
       background: #ddd;
       margin-right: 10px;
+
       img {
         width: 60px;
         height: 60px;
         border: 1px solid rgba(0, 0, 0, 0.08);
       }
     }
+
     .user-greet-all {
       display: flex;
       flex-direction: column;
@@ -880,21 +787,26 @@ export default {
     }
   }
 }
+
 .analy-title {
   display: flex;
   justify-content: space-between;
   padding-bottom: 0;
   align-items: center;
 }
-.analy-title > span {
+
+.analy-title>span {
   font-weight: 600;
 }
+
 .there-spot:hover {
   cursor: pointer;
 }
+
 .ant-calendar-picker-input {
   border: none !important;
 }
+
 .payAmountSpan {
   display: flex;
   justify-content: space-between;
@@ -926,6 +838,7 @@ export default {
   line-height: 33px;
   align-items: baseline;
   margin-bottom: 10px;
+
   .pay-amount {
     font-size: 33px;
     margin-right: 10px;
@@ -937,11 +850,13 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+
   .pay-count-date {
     display: flex;
     justify-content: space-around;
   }
 }
+
 .chart-padding {
   box-sizing: border-box;
   max-width: 330px;
@@ -950,6 +865,7 @@ export default {
   flex-shrink: 1;
   margin-bottom: 20px;
 }
+
 .change-date-layout {
   padding-left: 11px;
   align-items: center;
@@ -975,47 +891,55 @@ export default {
 </style>
 
 
-<style  lang="less" scoped>
+<style lang="less" scoped>
 .chart-top {
   display: flex;
   padding: 0 12px;
+
   .top-right__resize {
     flex: 0 0 350px;
     overflow: hidden;
     margin-bottom: 12px;
     margin-left: 20px;
   }
+
   .top-left__resize {
     border-radius: 6px;
+
     .chart-data {
       background-color: unset !important;
+
       .analy-title {
         font-size: 20px;
       }
     }
+
     color: #fff;
     flex: 1;
     margin-bottom: 12px;
 
-    background-image: linear-gradient(
-      103.57deg,
+    background-image: linear-gradient(103.57deg,
       rgb(12, 38, 64) 0%,
-      rgb(18, 55, 94) 100%
-    ) !important;
+      rgb(18, 55, 94) 100%) !important;
   }
+
   .top-middle__resize {
     flex: 0 0 200px;
     color: #fff;
+
     .ant-card {
       background: transparent !important;
       color: #fff !important;
     }
+
     .ant-statistic-content-value {
       color: #fff !important;
     }
+
     .ant-statistic-content {
       color: unset !important;
     }
+
     .middle-bottom {
       .chart-data {
         background-color: #123559 !important;
@@ -1025,6 +949,7 @@ export default {
         }
       }
     }
+
     .middle-top {
       .chart-data {
         background-color: rgb(64, 158, 255) !important;
@@ -1036,9 +961,11 @@ export default {
     }
   }
 }
+
 .title__bolder {
   font-weight: 600 !important;
 }
+
 .chart-item {
   padding: 0 12px 12px 12px !important;
 }

@@ -320,44 +320,44 @@ import { API_URL_REFUND_ORDER_LIST, req } from '@/api/manage'
 import moment from 'moment'
 import payOrderListData from "../../../utils/data/payOrderList"
 // // eslint-disable-next-line no-unused-vars
-// const tableColumns = [
-//   { key: 'payAmount', title: '支付金额', ellipsis: true, fixed: 'left', scopedSlots: { customRender: 'payAmountSlot' }, width: 100 },
-//   { key: 'refundAmount', title: '退款金额', ellipsis: true, scopedSlots: { customRender: 'refundAmountSlot' }, width: 100 },
-//   { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: 220 },
-//   { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: 220 },
-//   // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
-//   // { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
-//   { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
-//   { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
-//   { key: 'op', title: '操作', width: 100, fixed: 'right', scopedSlots: { customRender: 'opSlot' } }
-// ]
 const tableColumns = [
-  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
-  { key: 'billDate', dataIndex: 'billDate', title: '交易时间', width: 120 },
-  { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
-  { key: 'patientUni', title: '患者唯一码', width: 108, scopedSlots: { customRender: 'patientUniCodeSlot' } },
-  { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
-  { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
-  { key: 'amount', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
-  { key: 'amount', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
-  { key: 'amount', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
-
-
-  // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
-  // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
-  // // { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2), width: 100 },
-  // { key: 'mchName', title: '所属医院', dataIndex: 'mchName', ellipsis: true, width: 100 },
-
-  // // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
-  // // { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
-  // // { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 120 },
-  // { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
-  // // { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
-  // // { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, width: 100 },
-
-  // { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
-  { key: 'op', title: '操作', width: 120, fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  { key: 'refund', title: '支付订单号', scopedSlots: { customRender: 'payOrderSlot' }, width: 220 },
+  { key: 'pay', title: '退款订单号', scopedSlots: { customRender: 'refundOrderSlot' }, width: 220 },
+  { key: 'payAmount', title: '支付金额', ellipsis: true, scopedSlots: { customRender: 'payAmountSlot' }, width: 100 },
+  { key: 'refundAmount', title: '退款金额', ellipsis: true, scopedSlots: { customRender: 'refundAmountSlot' }, width: 100 },
+  // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
+  // { key: 'mchRefundNo', title: '商户退款单号', dataIndex: 'mchRefundNo' },
+  { key: 'state', title: '状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+  { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
+  { key: 'op', title: '操作', width: 100, fixed: 'right', scopedSlots: { customRender: 'opSlot' } }
 ]
+// const tableColumns = [
+//   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
+//   { key: 'billDate', dataIndex: 'billDate', title: '交易时间', width: 120 },
+//   { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
+//   { key: 'patientUni', title: '患者唯一码', width: 108, scopedSlots: { customRender: 'patientUniCodeSlot' } },
+//   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
+//   { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
+//   { key: 'amount', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
+//   { key: 'amount', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
+//   { key: 'amount', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
+
+
+//   // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
+//   // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
+//   // // { key: 'mchFeeAmount', dataIndex: 'mchFeeAmount', title: '手续费', customRender: (text) => '￥' + (text / 100).toFixed(2), width: 100 },
+//   // { key: 'mchName', title: '所属医院', dataIndex: 'mchName', ellipsis: true, width: 100 },
+
+//   // // { key: 'payOrderId', title: '支付订单号', dataIndex: 'payOrderId' },
+//   // // { key: 'mchOrderNo', title: '商户订单号', dataIndex: 'mchOrderNo' },
+//   // // { key: 'wayName', title: '支付方式', dataIndex: 'wayName', width: 120 },
+//   // { key: 'state', title: '支付状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+//   // // { key: 'notifyState', title: '回调状态', scopedSlots: { customRender: 'notifySlot' }, width: 100 },
+//   // // { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, width: 100 },
+
+//   // { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
+//   { key: 'op', title: '操作', width: 120, fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+// ]
 
 export default {
   name: 'IsvListPage',
@@ -385,13 +385,13 @@ export default {
     },
     // 请求table接口数据
     reqTableDataFunc: (params) => {
-      // return req.list(API_URL_REFUND_ORDER_LIST, params)
-      return new Promise((resolve) => {
-        resolve({
-          total: 2,
-          records: payOrderListData.payOrderList.data.rows
-        })
-      })
+      return req.list(API_URL_REFUND_ORDER_LIST, params)
+      // return new Promise((resolve) => {
+      //   resolve({
+      //     total: 2,
+      //     records: payOrderListData.payOrderList.data.rows
+      //   })
+      // })
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(true)

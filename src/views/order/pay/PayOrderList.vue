@@ -69,13 +69,16 @@
         :reqTableDataFunc="reqTableDataFunc" :tableColumns="tableColumns" :searchData="searchData" rowKey="payOrderId"
         :tableRowCrossColor="true">
 
-        <template slot="amountSlot" slot-scope="{record}"><b>金额：{{ record.amount }}</b></template> <!-- 自定义插槽 -->
+        <template slot="amountSlot" slot-scope="{record}"><b>交易：{{ record.amount / 100 }}</b></template> <!-- 自定义插槽 -->
         <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount / 100 }}</template>
         <template slot="patientInfoSlot" slot-scope="{record}">
           <div>姓名：{{ record.patientName }}</div>
           <div>证件：{{ record.idNo }}</div>
         </template>
-        <template slot="patientUniCodeSlot" slot-scope="{record}">{{ record.corpNo }}</template>
+        <template slot="patientUniCodeSlot" slot-scope="{record}">
+          <div>门诊号：{{ record.patientId }}</div>
+          <div>卡号：{{ record.corpNo }}</div>
+        </template>
         <template slot="businessTypeSlot" slot-scope="{record}">{{ record.optTypeDesc }}</template>
         <template slot="targetSlot" slot-scope="{record}">{{ record.corpName }}</template>
         <template slot="businessResoures" slot-scope="{record}">{{ record.subject }}</template>
@@ -108,10 +111,14 @@
         </template>
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list" style="color:#1890ff">
-            <p>{{ record.orderNo }}</p>
-            <p>{{ record.outTradeNo }}</p>
-            <p>{{ record.outPayNo }}</p>
+            <p>业务：{{ record.orderNo }}</p>
+            <p>平台：{{ record.outTradeNo }}</p>
+            <p>三方：{{ record.outPayNo }}</p>
           </div>
+        </template>
+        <template slot="billDateSlot" slot-scope="{record}">
+          <div>下单：{{ record.transTime }}</div>
+          <div>支付：{{ record.paymentTime }}</div>
         </template>
         <template slot="opSlot" slot-scope="{record}"> <!-- 操作列插槽 -->
           <JeepayTableColumns>
@@ -404,21 +411,20 @@ import RefundModal from './RefundModal' // 退款弹出框
 import JeepayTextUp from '@/components/JeepayTextUp/JeepayTextUp' // 文字上移组件
 import JeepayTable from '@/components/JeepayTable/JeepayTable'
 import JeepayTableColumns from '@/components/JeepayTable/JeepayTableColumns'
-import { API_URL_PAY_ORDER_LIST, API_URL_PAYWAYS_LIST, req } from '@/api/manage'
+import { API_URL_PAY_ORDER_INFO, API_URL_PAY_ORDER_LIST, API_URL_PAYWAYS_LIST, req } from '@/api/manage'
 import moment from 'moment'
 import Proceed from "@/components/GloabalProceed/proceed"
-import payOrderListData from "../../../utils/data/payOrderList"
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
-  { key: 'billDate', dataIndex: 'billDate', title: '交易时间', width: 120 },
+  { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 120 },
   { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
-  { key: 'patientUni', title: '患者唯一码', width: 108, scopedSlots: { customRender: 'patientUniCodeSlot' } },
+  { key: 'patientUni', title: '患者唯一码', width: 120, scopedSlots: { customRender: 'patientUniCodeSlot' } },
   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
   { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
-  { key: 'amount', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
-  { key: 'amount', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
-  { key: 'amount', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
+  { key: 'optTypeDesc', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
+  { key: 'subCorpName', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
+  { key: 'orderSourceDesc', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
 
 
   // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
@@ -491,13 +497,13 @@ export default {
     },
     // 请求table接口数据
     reqTableDataFunc: (params) => {
-      // return req.list(API_URL_PAY_ORDER_LIST, params)
-      return new Promise((resolve) => {
-        resolve({
-          total: 2,
-          records: payOrderListData.payOrderList.data.rows
-        })
-      })
+      return req.list(API_URL_PAY_ORDER_LIST, params)
+      // return new Promise((resolve) => {
+      //   resolve({
+      //     total: 2,
+      //     records: payOrderListData.payOrderList.data.rows
+      //   })
+      // })
     },
     searchFunc: function () { // 点击【查询】按钮点击事件
       this.$refs.infoTable.refTable(false)
@@ -512,7 +518,7 @@ export default {
     },
     detailFunc: function (recordId) {
       const that = this
-      req.getById(API_URL_PAY_ORDER_LIST, recordId).then(res => {
+      req.getById(API_URL_PAY_ORDER_INFO, recordId).then(res => {
         that.detailData = res
       })
       this.visible = true

@@ -77,7 +77,10 @@ export const API_URL_MCH_LIST = '/api/mchInfo'
 /** 商户App管理 **/
 export const API_URL_MCH_APP = '/api/mchApps'
 /** 支付订单管理 **/
-export const API_URL_PAY_ORDER_LIST = '/api/payOrder'
+// export const API_URL_PAY_ORDER_LIST = '/api/payOrder'
+export const API_URL_PAY_ORDER_INFO = '/api/payOrder'
+export const API_URL_PAY_ORDER_LIST = '/api/hisPayOrder/list'
+
 /** 退款订单管理 **/
 export const API_URL_REFUND_ORDER_LIST = '/api/refundOrder'
 /** 商户通知管理 **/
@@ -298,6 +301,70 @@ export function mchNotifyResend (notifyId) {
 export function queryAlipayIsvsubMchAuthUrl (mchAppId) {
   return request.request({
     url: '/api/mch/payConfigs/alipayIsvsubMchAuthUrls/' + mchAppId,
+    method: 'GET'
+  })
+}
+
+
+/** 支付体验配置 **/
+export function payTest (appId) {
+  return request.request({
+    url: 'api/paytest/payways/' + appId,
+    method: 'GET'
+  })
+}
+
+/** 支付体验下单配置 **/
+export function payTestOrder (parameter) {
+  return request.request({
+    url: '/api/paytest/payOrders',
+    method: 'POST',
+    data: parameter
+  })
+}
+
+
+/** 获取渠道用户ID二维码地址 **/
+export function getChannelUserQrImgUrl (ifCode, appId, extParam) {
+  return request.request({
+    url: '/api/mchTransfers/channelUserId',
+    method: 'GET',
+    params: { ifCode, appId, extParam }
+  })
+}
+
+/** 转账 **/
+export function doTransfer (parameter) {
+  return request.request({
+    url: '/api/mchTransfers/doTransfer',
+    method: 'POST',
+    data: parameter
+  }, true, true, true)
+}
+
+
+/** 获取到webSocket的前缀 （ws://localhost） **/
+export function getWebSocketPrefix () {
+  // 获取网站域名 +  端口号
+  let domain = document.location.protocol + '//' + document.location.host
+
+  // 判断api_base_url 是否设置
+  if (process.env.VUE_APP_API_BASE_URL && process.env.VUE_APP_API_BASE_URL !== '/') {
+    domain = process.env.VUE_APP_API_BASE_URL
+  }
+
+  if (domain.startsWith('https:')) {
+    return 'wss://' + domain.replace('https://', '')
+  } else {
+    return 'ws://' + domain.replace('http://', '')
+  }
+}
+
+
+/** 查询商户转账支出的接口 **/
+export function queryMchTransferIfCode (appId) {
+  return request.request({
+    url: 'api/mchTransfers/ifCodes/' + appId,
     method: 'GET'
   })
 }

@@ -48,19 +48,19 @@
     <div class='procee__routine'>
       <span class="procee__routine_title">医院处理成功</span>
       <div class="procee__routine_content">
-        123123
+        医院处理成功
       </div>
     </div>
     <div class='procee__routine'>
       <span class="procee__routine_title">医院处理成功</span>
       <div class="procee__routine_content">
-        123123
+        医院处理成功
       </div>
     </div>
     <div class='procee__routine'>
       <span class="procee__routine_title">医院处理成功</span>
       <div class="procee__routine_content">
-        123123
+        医院处理成功
       </div>
     </div>
   </a-modal>

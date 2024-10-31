@@ -54,7 +54,7 @@
   </div>
 </template>
 <script>
-import { API_URL_PAY_ORDER_LIST, req, payOrderRefund } from '@/api/manage'
+import { API_URL_PAY_ORDER_INFO, req, payOrderRefund } from '@/api/manage'
 export default {
 
   props: {
@@ -102,7 +102,7 @@ export default {
       this.visible = true
       this.refund = {}
       const that = this
-      req.getById(API_URL_PAY_ORDER_LIST, recordId).then(res => {
+      req.getById(API_URL_PAY_ORDER_INFO, recordId).then(res => {
         that.detailData = res
       })
     },
