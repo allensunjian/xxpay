@@ -69,15 +69,37 @@
         :reqTableDataFunc="reqTableDataFunc" :tableColumns="tableColumns" :searchData="searchData" rowKey="payOrderId"
         :tableRowCrossColor="true">
 
-        <template slot="amountSlot" slot-scope="{record}"><b>交易：{{ record.amount / 100 }}</b></template> <!-- 自定义插槽 -->
+        <template slot="amountSlot" slot-scope="{record}">
+          <a-tag color="blue">
+            交易：{{ record.amount / 100 }}
+          </a-tag>
+
+        </template> <!-- 自定义插槽 -->
         <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount / 100 }}</template>
         <template slot="patientInfoSlot" slot-scope="{record}">
-          <div>姓名：{{ record.patientName }}</div>
-          <div>证件：{{ record.idNo }}</div>
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              姓名
+            </a-tag>
+            {{ record.patientName }}
+          </p>
+          <p><a-tag color="blue" style="width: 40px;margin-top:4px">
+              证件
+            </a-tag>{{ record.idNo }}</p>
         </template>
         <template slot="patientUniCodeSlot" slot-scope="{record}">
-          <div>门诊号：{{ record.patientId }}</div>
-          <div>卡号：{{ record.corpNo }}</div>
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              诊号
+            </a-tag>
+            {{ record.patientId }}
+          </p>
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              卡号
+            </a-tag>
+            {{ record.corpNo }}
+          </p>
         </template>
         <template slot="businessTypeSlot" slot-scope="{record}">{{ record.optTypeDesc }}</template>
         <template slot="targetSlot" slot-scope="{record}">{{ record.corpName }}</template>
@@ -111,14 +133,39 @@
         </template>
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list" style="color:#1890ff">
-            <p>业务：{{ record.orderNo }}</p>
-            <p>平台：{{ record.outTradeNo }}</p>
-            <p>三方：{{ record.outPayNo }}</p>
+            <p>
+              <a-tag color="blue" style="width: 40px">
+                业务
+              </a-tag>
+              <span style="color:#1890ff;font-weight:normal">&nbsp;{{ record.orderNo }}</span>
+            </p>
+            <p>
+              <a-tag color="green" style="width: 40px">
+                平台
+              </a-tag>
+              <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.outTradeNo }}</span>
+            </p>
+            <p>
+              <a-tag color="orange" style="width: 40px">
+                三方
+              </a-tag>
+              <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.outPayNo }}</span>
+            </p>
           </div>
         </template>
         <template slot="billDateSlot" slot-scope="{record}">
-          <div>下单：{{ record.transTime }}</div>
-          <div>支付：{{ record.paymentTime }}</div>
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              下单
+            </a-tag>
+            <span style="color:#1890ff;font-weight:normal">&nbsp;{{ record.transTime }}</span>
+          </p>
+          <p>
+            <a-tag color="green" style="width: 40px">
+              支付
+            </a-tag>
+            <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.paymentTime }}</span>
+          </p>
         </template>
         <template slot="opSlot" slot-scope="{record}"> <!-- 操作列插槽 -->
           <JeepayTableColumns>
@@ -416,10 +463,10 @@ import moment from 'moment'
 import Proceed from "@/components/GloabalProceed/proceed"
 // eslint-disable-next-line no-unused-vars
 const tableColumns = [
-  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
+  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 240 },
   { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 200 },
   { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
-  { key: 'patientUni', title: '患者唯一码', width: 120, scopedSlots: { customRender: 'patientUniCodeSlot' } },
+  { key: 'patientUni', title: '患者唯一码', width: 140, scopedSlots: { customRender: 'patientUniCodeSlot' } },
   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
   { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
   { key: 'optTypeDesc', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },

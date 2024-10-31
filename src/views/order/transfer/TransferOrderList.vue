@@ -39,13 +39,38 @@
         :reqTableDataFunc="reqTableDataFunc" :tableColumns="tableColumns" :searchData="searchData" rowKey="transferId"
         :tableRowCrossColor="true">
 
-        <template slot="amountSlot" slot-scope="{record}"><b>金额：{{ record.amount }}</b></template> <!-- 自定义插槽 -->
+        <template slot="amountSlot" slot-scope="{record}">
+          <a-tag color="blue">
+            交易：{{ record.amount / 100 }}
+          </a-tag>
+
+        </template> <!-- 自定义插槽 -->
         <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount / 100 }}</template>
         <template slot="patientInfoSlot" slot-scope="{record}">
-          <div>姓名：{{ record.patientName }}</div>
-          <div>证件：{{ record.idNo }}</div>
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              姓名
+            </a-tag>
+            {{ record.patientName }}
+          </p>
+          <p><a-tag color="blue" style="width: 40px;margin-top:4px">
+              证件
+            </a-tag>{{ record.idNo }}</p>
         </template>
-        <template slot="patientUniCodeSlot" slot-scope="{record}">{{ record.corpNo }}</template>
+        <template slot="patientUniCodeSlot" slot-scope="{record}">
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              诊号
+            </a-tag>
+            {{ record.patientId }}
+          </p>
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              卡号
+            </a-tag>
+            {{ record.corpNo }}
+          </p>
+        </template>
         <template slot="businessTypeSlot" slot-scope="{record}">{{ record.optTypeDesc }}</template>
         <template slot="targetSlot" slot-scope="{record}">{{ record.corpName }}</template>
         <template slot="businessResoures" slot-scope="{record}">{{ record.subject }}</template>
@@ -65,28 +90,42 @@
               3 ? '转账失败' : record.state === 4 ? '任务关闭' : '未知' }}
           </a-tag>
         </template>
+        <template slot="billDateSlot" slot-scope="{record}">
+          <p>
+            <a-tag color="blue" style="width: 40px">
+              下单
+            </a-tag>
+            <span style="color:#1890ff;font-weight:normal">&nbsp;{{ record.transTime }}</span>
+          </p>
+          <p>
+            <a-tag color="green" style="width: 40px">
+              支付
+            </a-tag>
+            <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.paymentTime }}</span>
+          </p>
+        </template>
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list">
             <p><span style="color:#729ED5;background:#e7f5f7">转账</span>{{ record.transferId }}</p>
             <p style="margin-bottom: 0;">
               <span style="color:#56cf56;background:#d8eadf">商户</span>
               <a-tooltip placement="bottom" style="font-weight: normal;"
-                v-if="record.mchOrderNo.length > record.transferId.length">
+                v-if="record.mchOrderNo?.length > record.transferId?.length">
                 <template slot="title">
                   <span>{{ record.mchOrderNo }}</span>
                 </template>
-                {{ changeStr2ellipsis(record.mchOrderNo, record.transferId.length) }}
+                {{ changeStr2ellipsis(record.mchOrderNo, record?.transferId.length) }}
               </a-tooltip>
               <span style="font-weight: normal;" v-else>{{ record.mchOrderNo }}</span>
             </p>
             <p v-if="record.channelOrderNo" style="margin-bottom: 0;margin-top: 10px">
               <span style="color:#fff;background:#E09C4D">渠道</span>
               <a-tooltip placement="bottom" style="font-weight: normal;"
-                v-if="record.channelOrderNo.length > record.transferId.length">
+                v-if="record.channelOrderNo?.length > record.transferId?.length">
                 <template slot="title">
                   <span>{{ record.channelOrderNo }}</span>
                 </template>
-                {{ changeStr2ellipsis(record.channelOrderNo, record.transferId.length) }}
+                {{ changeStr2ellipsis(record.channelOrderNo, record.transferId?.length) }}
               </a-tooltip>
               <span style="font-weight: normal;" v-else>{{ record.channelOrderNo }}</span>
             </p>
@@ -129,10 +168,10 @@ import moment from 'moment'
 //   { title: '操作', width: '100px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 // ]
 const tableColumns = [
-  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 210 },
-  { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 200 },
+  { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 240 },
+  { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 220 },
   { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
-  { key: 'patientUni', title: '患者唯一码', width: 120, scopedSlots: { customRender: 'patientUniCodeSlot' } },
+  // { key: 'patientUni', title: '患者唯一码', width: 140, scopedSlots: { customRender: 'patientUniCodeSlot' } },
   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
   { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
   { key: 'optTypeDesc', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
@@ -152,7 +191,7 @@ const tableColumns = [
   // // { key: 'divisionState', title: '分账状态', scopedSlots: { customRender: 'divisionStateSlot' }, width: 100 },
 
   // { key: 'createdAt', dataIndex: 'createdAt', title: '创建日期', width: 120 },
-  { key: 'op', title: '操作', width: 120, fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  { key: 'op', title: '操作', width: 120, align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]
 
 export default {
