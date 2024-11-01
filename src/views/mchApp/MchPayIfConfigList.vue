@@ -127,7 +127,7 @@ const tableColumns = [
   { key: 'wayCode', title: '支付方式代码', dataIndex: 'wayCode' },
   { key: 'wayName', title: '支付方式名称', dataIndex: 'wayName' },
   { key: 'passageState', title: '状态', scopedSlots: { customRender: 'stateSlot' } },
-  { key: 'op', title: '操作', width: '200px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
+  // { key: 'op', title: '操作', width: '200px', fixed: 'right', align: 'center', scopedSlots: { customRender: 'opSlot' } }
 ]
 
 export default {
