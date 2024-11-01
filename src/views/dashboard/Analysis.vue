@@ -265,7 +265,7 @@
                 <a-descriptions-item label="所属系统">
                   {{
                     $store.state.user.sysType === "MGR"
-                      ? "运营平台"
+                      ? "智慧医院综合支付对账平台"
                       : $store.state.user.sysType === "MCH"
                         ? "商户系统"
                         : "未知"

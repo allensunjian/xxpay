@@ -81,7 +81,7 @@
         >
           <template slot="stateSlot" slot-scope="{record}">
             <!-- <a-badge :status="record.passageState === 0?'error':'processing'" :text="record.passageState === 0?'禁用':'启用'" /> -->
-             <a-switch checked-children="启用" un-checked-children="停用" v-model="record.passageState" @change="editPayPassageFunc(record)"></a-switch>
+             <a-switch checked-children="启用" un-checked-children="停用" :value="record.passageState == 1" @change="editPayPassageFunc(record)"></a-switch>
           </template>
           <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
             <JeepayTableColumns>
@@ -162,30 +162,13 @@ export default {
 
         try {
           cardList.forEach(item => {
-            item.error = ''
-            item.help = ''
-            const reg = /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/
-            // 状态开启则费率必填
-            if (item.state) {
-              if (!item.rate) {
-                item.error = 'error'
-                item.help = '请输入费率'
-                throw new Error('error')
-              }
-              if (!reg.test(item.rate) || item.rate > 100) {
-                item.error = 'error'
-                item.help = '最多四位小数'
-                throw new Error('error')
-              }
-            }
-
             reqParams.push({
               id: item.passageId,
               appId: this.appId,
               wayCode: that.wayCode,
               ifCode: item.ifCode,
-              rate: item.rate,
-              state: item.state ? 1 : 0
+              rate: 0,
+              state: item.state
             })
           })
         } catch (e) {
@@ -255,12 +238,11 @@ export default {
             title: '提示',
             content: '暂无可用支付接口配置'
           })
+          record.passageState = 0
         } else {
-                if (resData === undefined || resData.length === 0) {
-          that.cardList = []
-          return
-        }
-        const newItems = []
+          console.log(2222, resData)
+          record.passageState = record.passageState == 1 ? 0 : 1;
+                const newItems = []
         resData.forEach(item => {
           newItems.push({
             passageId: item.passageId ? item.passageId : '',
@@ -269,12 +251,14 @@ export default {
             icon: item.icon,
             bgColor: item.bgColor,
             rate: item.rate,
-            state: record.passageState === 1
+            state: record.passageState
           })
         })
+        // record.passageState = record.passageState ? false : true
         const cardList = newItems
         this.handleOkFunc(cardList)
         that.$forceUpdate()
+ 
           // that.$refs.mchPayPassageAddOrEdit.show(that.appId, record.wayCode)
         }
       })

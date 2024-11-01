@@ -19,7 +19,7 @@
             <a-form-item label="" class="table-head-layout">
               <a-select v-model="searchData.sysType" placeholder="所属系统" default-value="">
                 <a-select-option value="">全部</a-select-option>
-                <a-select-option value="MGR">运营平台</a-select-option>
+                <a-select-option value="MGR">智慧医院综合支付对账平台</a-select-option>
                 <a-select-option value="MCH">商户系统</a-select-option>
               </a-select>
             </a-form-item>
@@ -97,7 +97,7 @@
             <a-descriptions>
               <a-descriptions-item label="所属系统">
                 <a-tag :key="detailData.sysType" :color="detailData.sysType === 'MGR'?'green':detailData.sysType === 'MCH'?'geekblue':'loser'">
-                  {{ detailData.sysType === 'MGR'?'运营平台':detailData.sysType === 'MCH'?'商户系统':'其他' }}
+                  {{ detailData.sysType === 'MGR'?'智慧医院综合支付对账平台':detailData.sysType === 'MCH'?'商户系统':'其他' }}
                 </a-tag>
               </a-descriptions-item>
             </a-descriptions>

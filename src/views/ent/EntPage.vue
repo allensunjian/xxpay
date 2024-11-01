@@ -10,7 +10,7 @@
                 <a-col :md="6">
                   <a-form-item label="">
                     <a-select v-model="querySysType" placeholder="选择系统菜单" @change="refTable" class="table-head-layout">
-                      <a-select-option value="MGR">显示菜单：运营平台</a-select-option>
+                      <a-select-option value="MGR">显示菜单：智慧医院综合支付对账平台</a-select-option>
                       <a-select-option value="MCH">显示菜单：商户系统</a-select-option>
                     </a-select>
                   </a-form-item>
