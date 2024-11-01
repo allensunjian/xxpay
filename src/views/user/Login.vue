@@ -2,35 +2,26 @@
   <div class="main">
     <a-form class="user-layout-login" ref="formLogin" :form="form" @submit="handleSubmit">
       <!-- 错误提示信息 -->
-      <a-alert v-if="showLoginErrorInfo" type="error" showIcon style="margin-bottom: 24px;" :message="showLoginErrorInfo" />
+      <a-alert v-if="showLoginErrorInfo" type="error" showIcon style="margin-bottom: 24px;"
+        :message="showLoginErrorInfo" />
 
       <a-form-item>
-        <a-input
-          @focus="usernameIcon = require('@/assets/svg/select-user.svg')"
-          @blur="usernameIcon = require('@/assets/svg/user.svg')"
-          size="large"
-          type="text"
-          placeholder="请输入账户"
+        <a-input @focus="usernameIcon = require('@/assets/svg/select-user.svg')"
+          @blur="usernameIcon = require('@/assets/svg/user.svg')" size="large" type="text" placeholder="请输入账户"
           v-decorator="[
             'username',
-            {rules: [{ required: true, message: '请输入帐户名' }], validateTrigger: 'change'}
-          ]"
-        >
-          <img :src="usernameIcon" slot="prefix" class="user" alt="user" >
+            { rules: [{ required: true, message: '请输入帐户名' }], validateTrigger: 'change' }
+          ]">
+          <img :src="usernameIcon" slot="prefix" class="user" alt="user">
         </a-input>
       </a-form-item>
 
       <a-form-item>
-        <a-input-password
-          @focus="passwordIcon = require('@/assets/svg/select-lock.svg')"
-          @blur="passwordIcon = require('@/assets/svg/lock.svg')"
-          size="large"
-          placeholder="请输入密码"
-          v-decorator="[
+        <a-input-password @focus="passwordIcon = require('@/assets/svg/select-lock.svg')"
+          @blur="passwordIcon = require('@/assets/svg/lock.svg')" size="large" placeholder="请输入密码" v-decorator="[
             'password',
-            {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'change'}
-          ]"
-        >
+            { rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'change' }
+          ]">
           <!-- <a-icon src="../../assets/svg/user.svg" alt=""> -->
           <img :src="passwordIcon" slot="prefix" class="user" alt="user">
         </a-input-password>
@@ -38,23 +29,17 @@
 
       <div class="code">
         <a-form-item>
-          <a-input
-            @focus="vercodeIcon = require('@/assets/svg/select-code.svg')"
-            @blur="vercodeIcon = require('@/assets/svg/code.svg')"
-            class="code-input"
-            size="large"
-            type="text"
-            placeholder="请输入人机验证码"
-            v-decorator="[
+          <a-input @focus="vercodeIcon = require('@/assets/svg/select-code.svg')"
+            @blur="vercodeIcon = require('@/assets/svg/code.svg')" class="code-input" size="large" type="text"
+            placeholder="请输入人机验证码" v-decorator="[
               'usercode',
-              {rules: [{ required: true, message: '请输入人机验证码' }], validateTrigger: 'blur'}
-            ]"
-          >
+              { rules: [{ required: true, message: '请输入人机验证码' }], validateTrigger: 'blur' }
+            ]">
             <img :src="vercodeIcon" slot="prefix" class="user" alt="user" />
           </a-input>
         </a-form-item>
         <div class="code-img" style="position: relative;background:#ddd">
-          <img v-show="vercodeImgSrc" :src="vercodeImgSrc" @click="refVercode()"/>
+          <img v-show="vercodeImgSrc" :src="vercodeImgSrc" @click="refVercode()" />
           <div class="vercode-mask" v-show="isOverdue" @click="refVercode()">已过期 请刷新</div>
         </div>
       </div>
@@ -68,13 +53,7 @@
       </a-form-item>
 
       <a-form-item class="submit">
-        <a-button
-          size="large"
-          type="primary"
-          htmlType="submit"
-          class="login-button"
-          :loading="loginBtnLoadingFlag"
-        >登录
+        <a-button size="large" type="primary" htmlType="submit" class="login-button" :loading="loginBtnLoadingFlag">登录
         </a-button>
       </a-form-item>
     </a-form>
@@ -90,7 +69,7 @@ import { vercode } from '@/api/login'
 export default {
   components: {
   },
-  data () {
+  data() {
     return {
       isOverdue: false, // 设置过期样式
       isAutoLogin: true, // 是否是自动登录
@@ -104,13 +83,13 @@ export default {
       vercodeToken: '' // 验证码验证token
     }
   },
-  mounted () {
+  mounted() {
     this.refVercode()
   },
   methods: {
     ...mapActions(['Login', 'Logout']),
     // handler
-    handleSubmit (e) {
+    handleSubmit(e) {
       e.preventDefault() // 通知 Web 浏览器不要执行与事件关联的默认动作
       const that = this
       that.form.validateFields({ force: true }, (err, values) => {
@@ -132,7 +111,7 @@ export default {
         }
       })
     },
-    loginSuccess (res) {
+    loginSuccess(res) {
       this.$router.push({ path: '/' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
@@ -143,7 +122,7 @@ export default {
       }, 1000)
       this.showLoginErrorInfo = ''
     },
-    refVercode () { // 刷新图片验证码
+    refVercode() { // 刷新图片验证码
       const that = this
       // 获取图形验证码
       vercode().then(res => {
@@ -206,26 +185,32 @@ export default {
       float: right;
     }
   }
+
   .code {
     display: flex;
     justify-content: space-between;
+
     .code-input {
       width: 216px;
     }
+
     .code-img {
       width: 137px;
       height: 40px;
       background-color: #ddd;
-      img{
+
+      img {
         width: 137px;
         height: 40px;
       }
     }
   }
+
   .submit {
     margin-top: 50px;
   }
 }
+
 .vercode-mask {
   position: absolute;
   left: 0;
@@ -234,9 +219,10 @@ export default {
   height: 100%;
   background: #000;
   opacity: 0.8;
-  text-align:center;
+  text-align: center;
   line-height: 40px;
-  color:#fff;
+  color: #fff;
+
   &:hover {
     cursor: pointer;
   }

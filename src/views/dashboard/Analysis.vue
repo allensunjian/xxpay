@@ -54,7 +54,8 @@
                 </div>
                 <div style="font-size: 20px;color:#333;margin-top: 10px">
                   <span>￥ {{ this.mainChart.totalAmount }}</span>
-                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.totalCount }}笔</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.totalCount
+                    }}笔</span>
                 </div>
                 <!-- <a-card :bordered=" false">
                     <a-statistic style="margin-top: 10px; color: #fff !important" :precision="2"
@@ -79,7 +80,8 @@
                 </div>
                 <div style="font-size: 20px;color:#333;margin-top: 10px">
                   <span>￥ {{ this.mainChart.amount }}</span>
-                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.amountCount }}笔</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.amountCount
+                    }}笔</span>
                 </div>
                 <!-- <a-card :bordered="false">
                   <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
@@ -131,7 +133,8 @@
                 </div>
                 <div style="font-size: 20px;color:#333;margin-top: 10px">
                   <span>￥ {{ this.mainChart.refundAmount }}</span>
-                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.refundCount }}笔</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.refundCount
+                    }}笔</span>
                 </div>
                 <!-- <a-card :bordered="false">
                   <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
@@ -729,6 +732,7 @@ export default {
 
 <style lang="less" scoped>
 @import "./index.less"; // 响应式布局
+
 
 .user-greet {
   font-size: 19px;

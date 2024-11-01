@@ -13,6 +13,7 @@
         <a-step title="支付通道配置" @click="stepChange(1)" />
       </a-steps>
     </template>
+
     <div v-if="currentStep === 0">
       <JeepayCard
         ref="infoCard"
@@ -79,7 +80,8 @@
           rowKey="wayCode"
         >
           <template slot="stateSlot" slot-scope="{record}">
-            <a-badge :status="record.passageState === 0?'error':'processing'" :text="record.passageState === 0?'禁用':'启用'" />
+            <!-- <a-badge :status="record.passageState === 0?'error':'processing'" :text="record.passageState === 0?'禁用':'启用'" /> -->
+             <a-switch checked-children="启用" un-checked-children="停用" v-model="record.passageState" @change="editPayPassageFunc(record)"></a-switch>
           </template>
           <template slot="opSlot" slot-scope="{record}">  <!-- 操作列插槽 -->
             <JeepayTableColumns>
@@ -154,6 +156,50 @@ export default {
     }
   },
   methods: {
+     handleOkFunc: function (cardList) { // 点击【确认】按钮事件
+        const that = this
+        const reqParams = []
+
+        try {
+          cardList.forEach(item => {
+            item.error = ''
+            item.help = ''
+            const reg = /^(([1-9]{1}\d{0,1})|(0{1}))(\.\d{1,4})?$/
+            // 状态开启则费率必填
+            if (item.state) {
+              if (!item.rate) {
+                item.error = 'error'
+                item.help = '请输入费率'
+                throw new Error('error')
+              }
+              if (!reg.test(item.rate) || item.rate > 100) {
+                item.error = 'error'
+                item.help = '最多四位小数'
+                throw new Error('error')
+              }
+            }
+
+            reqParams.push({
+              id: item.passageId,
+              appId: this.appId,
+              wayCode: that.wayCode,
+              ifCode: item.ifCode,
+              rate: item.rate,
+              state: item.state ? 1 : 0
+            })
+          })
+        } catch (e) {
+          if (e.message === 'error') {
+            this.$forceUpdate()
+            return
+          }
+        }
+        // 请求接口
+        req.add(API_URL_MCH_PAYPASSAGE_LIST, { 'reqParams': JSON.stringify(reqParams) }).then(res => {
+          that.$message.success('保存成功')
+ 
+        })
+    },
     // 弹层打开事件
     show (appId) {
       this.appId = appId
@@ -210,7 +256,26 @@ export default {
             content: '暂无可用支付接口配置'
           })
         } else {
-          that.$refs.mchPayPassageAddOrEdit.show(that.appId, record.wayCode)
+                if (resData === undefined || resData.length === 0) {
+          that.cardList = []
+          return
+        }
+        const newItems = []
+        resData.forEach(item => {
+          newItems.push({
+            passageId: item.passageId ? item.passageId : '',
+            ifCode: item.ifCode,
+            ifName: item.ifName,
+            icon: item.icon,
+            bgColor: item.bgColor,
+            rate: item.rate,
+            state: record.passageState === 1
+          })
+        })
+        const cardList = newItems
+        this.handleOkFunc(cardList)
+        that.$forceUpdate()
+          // that.$refs.mchPayPassageAddOrEdit.show(that.appId, record.wayCode)
         }
       })
     },

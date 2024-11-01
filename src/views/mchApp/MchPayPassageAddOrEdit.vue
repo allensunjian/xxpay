@@ -150,7 +150,7 @@ export default {
 
             reqParams.push({
               id: item.passageId,
-              appId: that.appId,
+              appId: this.appId,
               wayCode: that.wayCode,
               ifCode: item.ifCode,
               rate: item.rate,
@@ -163,6 +163,7 @@ export default {
             return
           }
         }
+        console.log(222222, reqParams)
         // 请求接口
         req.add(API_URL_MCH_PAYPASSAGE_LIST, { 'reqParams': JSON.stringify(reqParams) }).then(res => {
           that.$message.success('保存成功')

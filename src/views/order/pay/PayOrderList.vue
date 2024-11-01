@@ -70,35 +70,21 @@
         :tableRowCrossColor="true">
 
         <template slot="amountSlot" slot-scope="{record}">
-          <a-tag color="blue">
-            交易：{{ record.amount / 100 }}
-          </a-tag>
-
+          <span style="font-weight: 800;">+¥{{ record.amount / 100 }}</span>
         </template> <!-- 自定义插槽 -->
         <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount / 100 }}</template>
         <template slot="patientInfoSlot" slot-scope="{record}">
           <p>
-            <a-tag color="blue" style="width: 40px">
-              姓名
-            </a-tag>
-            {{ record.patientName }}
+            <span style="color:#ccc"> 姓名：</span>{{ record.patientName || '-' }}
           </p>
-          <p><a-tag color="blue" style="width: 40px;margin-top:4px">
-              证件
-            </a-tag>{{ record.idNo }}</p>
+          <p> <span style="color:#ccc"> 证件：</span>{{ record.idNo || '-' }}</p>
         </template>
         <template slot="patientUniCodeSlot" slot-scope="{record}">
           <p>
-            <a-tag color="blue" style="width: 40px">
-              诊号
-            </a-tag>
-            {{ record.patientId }}
+            <span style="color:#ccc"> 诊号: </span>{{ record.patientId }}
           </p>
           <p>
-            <a-tag color="blue" style="width: 40px">
-              卡号
-            </a-tag>
-            {{ record.corpNo }}
+            <span style="color:#ccc"> 卡号: </span>{{ record.corpNo }}
           </p>
         </template>
         <template slot="businessTypeSlot" slot-scope="{record}">{{ record.optTypeDesc }}</template>
@@ -108,8 +94,8 @@
 
           <!-- <a-tag color="orange"></a-tag>
           <a-tag color="red" >分账处理中</a-tag> -->
-          <a-tag color="green" @click="ProceedControllerGetShow(record)">医院处理成功</a-tag>
-
+          <!-- <a-tag color="green" @click="ProceedControllerGetShow(record)"></a-tag> -->
+          <a-tag color="green">处理成功</a-tag>
         </template>
         <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
@@ -133,38 +119,38 @@
         </template>
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list" style="color:#1890ff">
-            <p>
-              <a-tag color="blue" style="width: 40px">
+            <p v-if="record.orderNo">
+              <a-tag color="#108ee9" style="width: 40px">
                 业务
               </a-tag>
-              <span style="color:#1890ff;font-weight:normal">&nbsp;{{ record.orderNo }}</span>
+              <span style="font-weight:normal;color:#bbb">&nbsp;{{ record.orderNo }}</span>
             </p>
-            <p>
-              <a-tag color="green" style="width: 40px">
+            <p v-if="record.outTradeNo">
+              <a-tag color="#779649" style="width: 40px">
                 平台
               </a-tag>
-              <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.outTradeNo }}</span>
+              <span style="font-weight:normal;color:#bbb">&nbsp;{{ record.outTradeNo }}</span>
             </p>
-            <p>
-              <a-tag color="orange" style="width: 40px">
+            <p v-if="record.outPayNo">
+              <a-tag color="rgb(224, 156, 77)" style="width: 40px">
                 三方
               </a-tag>
-              <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.outPayNo }}</span>
+              <span style="color:#bbb;font-weight:normal">&nbsp;{{ record.outPayNo }}</span>
             </p>
           </div>
         </template>
         <template slot="billDateSlot" slot-scope="{record}">
-          <p>
-            <a-tag color="blue" style="width: 40px">
+          <p v-if="record.transTime">
+            <!-- <a-tag color="#108ee9" style="width: 40px">
               下单
-            </a-tag>
-            <span style="color:#1890ff;font-weight:normal">&nbsp;{{ record.transTime }}</span>
+            </a-tag> -->
+            <span style="color:#333;font-weight:normal">&nbsp;{{ record.transTime }}-下单</span>
           </p>
-          <p>
-            <a-tag color="green" style="width: 40px">
+          <p v-if="record.paymentTime">
+            <!-- <a-tag color="green" style="width: 40px">
               支付
-            </a-tag>
-            <span style="color:#52c41a;font-weight:normal">&nbsp;{{ record.paymentTime }}</span>
+            </a-tag> -->
+            <span style="color:#333;font-weight:normal">&nbsp;{{ record.paymentTime }}-支付</span>
           </p>
         </template>
         <template slot="opSlot" slot-scope="{record}"> <!-- 操作列插槽 -->
@@ -453,6 +439,7 @@
   </page-header-wrapper>
 
 </template>
+
 <script>
 import RefundModal from './RefundModal' // 退款弹出框
 import JeepayTextUp from '@/components/JeepayTextUp/JeepayTextUp' // 文字上移组件
