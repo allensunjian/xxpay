@@ -54,7 +54,7 @@
                 </div>
                 <div style="font-size: 20px;color:#333;margin-top: 10px">
                   <span>￥ {{ this.mainChart.totalAmount }}</span>
-                  <span style="float: right;font-size: 16px;transform: translateY(6px)">1452笔</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.totalCount }}笔</span>
                 </div>
                 <!-- <a-card :bordered=" false">
                     <a-statistic style="margin-top: 10px; color: #fff !important" :precision="2"
@@ -78,8 +78,8 @@
                   </a-tooltip> -->
                 </div>
                 <div style="font-size: 20px;color:#333;margin-top: 10px">
-                  <span>￥ {{ this.mainChart.totalPayCount }}</span>
-                  <span style="float: right;font-size: 16px;transform: translateY(6px)">1452笔</span>
+                  <span>￥ {{ this.mainChart.amount }}</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.amountCount }}笔</span>
                 </div>
                 <!-- <a-card :bordered="false">
                   <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
@@ -130,8 +130,8 @@
                   </a-tooltip> -->
                 </div>
                 <div style="font-size: 20px;color:#333;margin-top: 10px">
-                  <span>￥ {{ this.mainChart.totalMch }}</span>
-                  <span style="float: right;font-size: 16px;transform: translateY(6px)">1452笔</span>
+                  <span>￥ {{ this.mainChart.refundAmount }}</span>
+                  <span style="float: right;font-size: 16px;transform: translateY(6px)">{{ this.mainChart.refundCount }}笔</span>
                 </div>
                 <!-- <a-card :bordered="false">
                   <a-statistic :value-style="{ color: '#fff' }" style="margin-top: 10px; color: #fff"
@@ -362,7 +362,7 @@ export default {
         // 主页提示
         todayAmountTip: "今日成功交易金额及笔数", // 今日交易提示文字
         totalAmountTip: "成功交易总金额", // 交易总金额提示文字
-        totalPayCountTip: "成功交易总笔数", // 交易总笔数提示文字
+        totalCountTip: "成功交易总笔数", // 交易总笔数提示文字
         totalIsvTip: "服务商数量", // 服务商数量提示文字
         totalMchTip: "商户数量", // 商户数量提示文字
         helloTitle: "",
@@ -376,8 +376,12 @@ export default {
         todayPayCount: 0, // 今日交易笔数
         yesterdayAmount: 0.0, // 昨日交易金额
         payWeek: 0.0, // 近7天总交易金额
-        totalPayCount: 0, // 交易总笔数
+        totalCount: 0, // 交易总笔数
         totalAmount: 0.0, // 交易总金额
+        amountCount: 0, // 支付总笔数
+        amount: 0.0, // 支付总金额
+        refundCount: 0, // 退款总笔数
+        refundAmount: 0.0, // 退款总金额
         totalIsv: 0, // 当前服务商总数
         totalMch: 0, // 当前商户总数
       },
@@ -421,7 +425,11 @@ export default {
             that.mainChart.totalMch = res.totalMch;
             that.mainChart.totalIsv = res.totalIsv;
             that.mainChart.totalAmount = res.totalAmount;
-            that.mainChart.totalPayCount = res.totalCount;
+            that.mainChart.totalCount = res.totalCount;
+            that.mainChart.amount = res.amount;
+            that.mainChart.amountCount = res.amountCount;
+            that.mainChart.refundAmount = res.refundAmount;
+            that.mainChart.refundCount = res.refundCount;
             that.skeletonClose(that);
           })
           .catch((err) => {
