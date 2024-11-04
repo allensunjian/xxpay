@@ -267,7 +267,7 @@
                     $store.state.user.sysType === "MGR"
                       ? "智慧医院综合支付对账平台"
                       : $store.state.user.sysType === "MCH"
-                        ? "商户系统"
+                        ? "智慧医院综合支付对账平台"
                         : "未知"
                   }}
                 </a-descriptions-item>

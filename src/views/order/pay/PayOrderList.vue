@@ -17,8 +17,7 @@
               v-model="searchData.unionOrderId" />
             <!--            <jeepay-text-up :placeholder="'支付订单号'" :msg="searchData.payOrderId" v-model="searchData.payOrderId" />-->
             <!--            <jeepay-text-up :placeholder="'商户订单号'" :msg="searchData.mchOrderNo" v-model="searchData.mchOrderNo" />-->
-            <jeepay-text-up :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
-            <jeepay-text-up :placeholder="'服务商号'" :msg="searchData.isvNo" v-model="searchData.isvNo" />
+            <jeepay-text-up v-if="$store.state.user.sysType === 'MGR'" :placeholder="'商户号'" :msg="searchData.mchNo" v-model="searchData.mchNo" />
             <jeepay-text-up :placeholder="'应用AppId'" :msg="searchData.appId" v-model="searchData.appId" />
             <a-form-item v-if="$access('ENT_PAY_ORDER_SEARCH_PAY_WAY')" label="" class="table-head-layout">
               <a-select v-model="searchData.wayCode" placeholder="支付方式" default-value="">
@@ -41,21 +40,22 @@
               </a-select>
             </a-form-item>
             <a-form-item label="" class="table-head-layout">
-              <a-select v-model="searchData.notifyState" placeholder="回调状态" default-value="">
+              <a-select v-model="searchData.optType" placeholder="业务类型" default-value="">
                 <a-select-option value="">全部</a-select-option>
                 <a-select-option value="0">未发送</a-select-option>
                 <a-select-option value="1">已发送</a-select-option>
               </a-select>
             </a-form-item>
             <a-form-item label="" class="table-head-layout">
-              <a-select v-model="searchData.divisionState" placeholder="分账状态" default-value="">
+              <a-select v-model="searchData.orderSource" placeholder="业务来源" default-value="">
                 <a-select-option value="">全部</a-select-option>
-                <a-select-option value="0">未发生分账</a-select-option>
-                <a-select-option value="1">等待分账任务处理</a-select-option>
-                <a-select-option value="2">分账处理中</a-select-option>
-                <a-select-option value="3">分账任务已结束（状态请看分账记录）</a-select-option>
+                <a-select-option value="0">未发送</a-select-option>
+                <a-select-option value="1">已发送</a-select-option>
               </a-select>
             </a-form-item>
+            <br/>
+            <jeepay-text-up :placeholder="'操作员'" :msg="searchData.operId" v-model="searchData.operId" />
+            <jeepay-text-up :placeholder="'姓名'" :msg="searchData.patientName" v-model="searchData.patientName" />
             <span class="table-page-search-submitButtons">
               <a-button type="primary" icon="search" @click="queryFunc" :loading="btnLoading">搜索</a-button>
               <a-button style="margin-left: 8px" icon="reload" @click="() => this.searchData = {}">重置</a-button>
@@ -74,29 +74,18 @@
         </template> <!-- 自定义插槽 -->
         <template slot="refundAmountSlot" slot-scope="{record}">￥{{ record.refundAmount / 100 }}</template>
         <template slot="patientInfoSlot" slot-scope="{record}">
-          <p>
-            <span style="color:#ccc"> 姓名：</span>{{ record.patientName || '-' }}
-          </p>
-          <p> <span style="color:#ccc"> 证件：</span>{{ record.idNo || '-' }}</p>
+            <span > 姓名：</span>{{ record.patientName || '-' }}
+            <br/>
+            <span > 证件：</span>{{ record.idNo || '-' }}
         </template>
         <template slot="patientUniCodeSlot" slot-scope="{record}">
-          <p>
-            <span style="color:#ccc"> 诊号: </span>{{ record.patientId }}
-          </p>
-          <p>
-            <span style="color:#ccc"> 卡号: </span>{{ record.corpNo }}
-          </p>
+            <span > 诊号: </span>{{ record?.patientId }}
+            <br/>
+            <span > 卡号: </span>{{ record.cardNo }}
         </template>
-        <template slot="businessTypeSlot" slot-scope="{record}">{{ record.optTypeDesc }}</template>
+        <template slot="optTypeSlot" slot-scope="{record}">{{ record.optTypeDesc }}</template>
         <template slot="targetSlot" slot-scope="{record}">{{ record.corpName }}</template>
-        <template slot="businessResoures" slot-scope="{record}">{{ record.subject }}</template>
-        <template slot="OrderStateSlot" slot-scope="{record}">
-
-          <!-- <a-tag color="orange"></a-tag>
-          <a-tag color="red" >分账处理中</a-tag> -->
-          <!-- <a-tag color="green" @click="ProceedControllerGetShow(record)"></a-tag> -->
-          <a-tag color="green">处理成功</a-tag>
-        </template>
+        <template slot="orderSourceResoures" slot-scope="{record}">{{ record.orderSourceDesc }}</template>
         <!-- 自定义插槽 -->
         <template slot="stateSlot" slot-scope="{record}">
           <a-tag :key="record.state"
@@ -119,19 +108,19 @@
         </template>
         <template slot="orderSlot" slot-scope="{record}">
           <div class="order-list" style="color:#1890ff">
-            <p v-if="record.orderNo">
+            <p>
               <a-tag color="#108ee9" style="width: 40px">
                 业务
               </a-tag>
               <span style="font-weight:normal;color:#bbb">&nbsp;{{ record.orderNo }}</span>
             </p>
-            <p v-if="record.outTradeNo">
+            <p>
               <a-tag color="#779649" style="width: 40px">
                 平台
               </a-tag>
               <span style="font-weight:normal;color:#bbb">&nbsp;{{ record.outTradeNo }}</span>
             </p>
-            <p v-if="record.outPayNo">
+            <p>
               <a-tag color="rgb(224, 156, 77)" style="width: 40px">
                 三方
               </a-tag>
@@ -140,23 +129,23 @@
           </div>
         </template>
         <template slot="billDateSlot" slot-scope="{record}">
-          <p v-if="record.transTime">
-            <!-- <a-tag color="#108ee9" style="width: 40px">
+          <p>
+            <a-tag color="#108ee9" style="width: 40px">
               下单
-            </a-tag> -->
-            <span style="color:#333;font-weight:normal">&nbsp;{{ record.transTime }}-下单</span>
+            </a-tag>
+            <span style="color:#333;font-weight:normal">&nbsp;{{ record.transTime }}</span>
           </p>
-          <p v-if="record.paymentTime">
-            <!-- <a-tag color="green" style="width: 40px">
+          <p>
+            <a-tag color="green" style="width: 40px">
               支付
-            </a-tag> -->
-            <span style="color:#333;font-weight:normal">&nbsp;{{ record.paymentTime }}-支付</span>
+            </a-tag>
+            <span style="color:#333;font-weight:normal">&nbsp;{{ record.paymentTime }}</span>
           </p>
         </template>
         <template slot="opSlot" slot-scope="{record}"> <!-- 操作列插槽 -->
           <JeepayTableColumns>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_VIEW')"
-              @click="detailFunc(record.payOrderId)">详情</a-button>
+              @click="detailFunc(record, record.payOrderId)">详情</a-button>
             <a-button type="link" v-if="$access('ENT_PAY_ORDER_REFUND')" style="color: red"
               v-show="(record.state === 2 && record.refundState !== 2)"
               @click="openFunc(record, record.payOrderId)">退款</a-button>
@@ -224,14 +213,14 @@
               </a-descriptions-item>
             </a-descriptions>
           </a-col>
-          <a-col :sm="12">
+          <!-- <a-col :sm="12">
             <a-descriptions><a-descriptions-item label="手续费"><a-tag color="pink">{{ detailData.mchFeeAmount / 100
                   }}</a-tag></a-descriptions-item></a-descriptions>
           </a-col>
           <a-col :sm="12">
             <a-descriptions><a-descriptions-item label="商家费率">{{ (detailData.mchFeeRate * 100).toFixed(2)
                 }}%</a-descriptions-item></a-descriptions>
-          </a-col>
+          </a-col> -->
           <a-col :sm="12">
             <a-descriptions>
               <a-descriptions-item label="订单状态">
@@ -403,6 +392,37 @@
           </a-col>
           <a-divider />
           <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="患者姓名">
+                {{ detailData.row?.patientName }}
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="证件号">
+                <span v-if="detailData.row?.idNo">{{ detailData.row.idNo }}</span>
+                <span v-else>{{ detailData.row?.guarderIdNo }}</span>
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="患者唯一码">
+                  (诊号) {{ detailData.row?.patientId }} 
+                  <br/>
+                  (卡号) {{ detailData.row?.cardNo }} 
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <a-col :sm="12">
+            <a-descriptions>
+              <a-descriptions-item label="付款账户">
+                {{ detailData.row?.buyerAccount }}
+              </a-descriptions-item>
+            </a-descriptions>
+          </a-col>
+          <!-- <a-col :sm="12">
             <a-descriptions><a-descriptions-item label="订单分账模式">
                 <span v-if="detailData.divisionMode == 0">该笔订单不允许分账</span>
                 <span v-else-if="detailData.divisionMode == 1">支付成功按配置自动完成分账</span>
@@ -422,9 +442,9 @@
           <a-col :sm="12">
             <a-descriptions><a-descriptions-item label="最新分账发起时间">{{ detailData.divisionLastTime
                 }}</a-descriptions-item></a-descriptions>
-          </a-col>
+          </a-col> -->
         </a-row>
-        <a-divider />
+        <!-- <a-divider /> -->
         <a-row justify="start" type="flex">
           <a-col :sm="24">
             <a-form-model-item label="扩展参数">
@@ -452,13 +472,13 @@ import Proceed from "@/components/GloabalProceed/proceed"
 const tableColumns = [
   { key: 'orderNo', title: '订单号', scopedSlots: { customRender: 'orderSlot' }, width: 240 },
   { key: 'billDate', title: '交易时间', scopedSlots: { customRender: 'billDateSlot' }, width: 200 },
-  { key: 'refundAmount', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
+  { key: 'patientInfo', title: '就诊人信息', width: 200, scopedSlots: { customRender: 'patientInfoSlot' } },
   { key: 'patientUni', title: '患者唯一码', width: 140, scopedSlots: { customRender: 'patientUniCodeSlot' } },
   { key: 'amount', title: '金额（元）', ellipsis: true, width: 108, scopedSlots: { customRender: 'amountSlot' } },
-  { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'OrderStateSlot' }, width: 100 },
-  { key: 'optTypeDesc', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessTypeSlot' } },
+  { key: 'divisionState', title: '订单状态', scopedSlots: { customRender: 'stateSlot' }, width: 100 },
+  { key: 'optTypeDesc', title: '业务类型', ellipsis: true, width: 108, scopedSlots: { customRender: 'optTypeSlot' } },
   { key: 'subCorpName', title: '所属医院', ellipsis: true, width: 108, scopedSlots: { customRender: 'targetSlot' } },
-  { key: 'orderSourceDesc', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'businessResoures' } },
+  { key: 'orderSourceDesc', title: '业务来源', ellipsis: true, width: 108, scopedSlots: { customRender: 'orderSourceResoures' } },
 
 
   // { key: 'refundAmount', title: '退款金额', width: 108, scopedSlots: { customRender: 'refundAmountSlot' } },
@@ -550,10 +570,11 @@ export default {
       }
       this.$refs.refundModalInfo.show(recordId)
     },
-    detailFunc: function (recordId) {
+    detailFunc(record, recordId) {
       const that = this
       req.getById(API_URL_PAY_ORDER_INFO, recordId).then(res => {
         that.detailData = res
+        that.detailData.row = record
       })
       this.visible = true
     },
